@@ -1,0 +1,552 @@
+{
+ "Resources": {
+  "iampolicy6C93E3BF": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "iam:AttachRolePolicy",
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:DeleteRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:GetRole",
+        "iam:GetRolePolicy",
+        "iam:PassRole",
+        "iam:PutRolePolicy",
+        "iam:TagPolicy",
+        "iam:TagRole",
+        "iam:UntagPolicy",
+        "iam:UntagRole"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:iam::",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":policy/*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:iam::",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":role/*NorthSouthFWProviderRole"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "iampolicy6C93E3BF",
+    "Groups": [
+     {
+      "Ref": "scnorthsouthfwendusers99977B40"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/iam-policy/Resource"
+   }
+  },
+  "cfnpolicy5C1835BC": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "cloudformation:CreateStack",
+        "cloudformation:DeleteStack",
+        "cloudformation:DescribeStackEvents",
+        "cloudformation:DescribeStackResource",
+        "cloudformation:DescribeStackResources",
+        "cloudformation:DescribeStacks",
+        "cloudformation:GetStackPolicy",
+        "cloudformation:GetTemplate",
+        "cloudformation:GetTemplateSummary",
+        "cloudformation:ListStackResources",
+        "cloudformation:RollbackStack",
+        "cloudformation:SetStackPolicy",
+        "cloudformation:SignalResource",
+        "cloudformation:TagResource",
+        "cloudformation:UntagResource",
+        "cloudformation:UpdateStack"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:cloudformation:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":changeSet/*/*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:cloudformation:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":stack/*/*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:cloudformation:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":stackset/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "cloudformation:DeactivateType",
+        "cloudformation:DeregisterType",
+        "cloudformation:DescribeType",
+        "cloudformation:ListStacks",
+        "cloudformation:ListTypeRegistrations",
+        "cloudformation:ListTypeVersions",
+        "cloudformation:ListTypes",
+        "cloudformation:PublishType",
+        "cloudformation:RegisterType",
+        "cloudformation:SetTypeConfiguration",
+        "cloudformation:SetTypeDefaultVersion",
+        "cloudformation:TestType",
+        "cloudformation:ValidateTemplate"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "cfnpolicy5C1835BC",
+    "Groups": [
+     {
+      "Ref": "scnorthsouthfwendusers99977B40"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/cfn-policy/Resource"
+   }
+  },
+  "lambdapolicyA5E98E09": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "lambda:CreateFunction",
+        "lambda:DeleteFunction",
+        "lambda:GetFunction",
+        "lambda:InvokeAsync",
+        "lambda:InvokeFunction",
+        "lambda:TagResource",
+        "lambda:UntagResource"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:lambda:",
+          {
+           "Ref": "AWS::Region"
+          },
+          ":",
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ":function:*NorthSouthFWProvider"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "lambdapolicyA5E98E09",
+    "Groups": [
+     {
+      "Ref": "scnorthsouthfwendusers99977B40"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/lambda-policy/Resource"
+   }
+  },
+  "scnorthsouthfwendusers99977B40": {
+   "Type": "AWS::IAM::Group",
+   "Properties": {
+    "GroupName": "sc-northsouthfw-endusers",
+    "ManagedPolicyArns": [
+     "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
+     "arn:aws:iam::aws:policy/AWSServiceCatalogEndUserFullAccess",
+     "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
+     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/sc-northsouthfw-endusers/Resource"
+   }
+  },
+  "scenduserGroup0": {
+   "Type": "AWS::IAM::UserToGroupAddition",
+   "Properties": {
+    "GroupName": {
+     "Ref": "scnorthsouthfwendusers99977B40"
+    },
+    "Users": [
+     "scenduser"
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/scenduserGroup0"
+   }
+  },
+  "NorthSouthFWPortfolio47D3B5E4": {
+   "Type": "AWS::ServiceCatalog::Portfolio",
+   "Properties": {
+    "DisplayName": "North-South Firewall Routing Provider",
+    "ProviderName": "Network Account Team",
+    "Description": "Portfolio to provision North South Firewall Routing"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/NorthSouthFWPortfolio/Resource"
+   }
+  },
+  "NorthSouthFWPortfolioPortfolioProductAssociationf1a198a0555cC8463814": {
+   "Type": "AWS::ServiceCatalog::PortfolioProductAssociation",
+   "Properties": {
+    "PortfolioId": {
+     "Ref": "NorthSouthFWPortfolio47D3B5E4"
+    },
+    "ProductId": {
+     "Ref": "NorthSouthFWProductB61C9017"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/NorthSouthFWPortfolio/PortfolioProductAssociationf1a198a0555c"
+   }
+  },
+  "NorthSouthFWPortfolioPortolioPrincipalAssociationba5f46dd8e89B159527C": {
+   "Type": "AWS::ServiceCatalog::PortfolioPrincipalAssociation",
+   "Properties": {
+    "PortfolioId": {
+     "Ref": "NorthSouthFWPortfolio47D3B5E4"
+    },
+    "PrincipalARN": {
+     "Fn::GetAtt": [
+      "scnorthsouthfwendusers99977B40",
+      "Arn"
+     ]
+    },
+    "PrincipalType": "IAM"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/NorthSouthFWPortfolio/PortolioPrincipalAssociationba5f46dd8e89"
+   }
+  },
+  "NorthSouthFWProductB61C9017": {
+   "Type": "AWS::ServiceCatalog::CloudFormationProduct",
+   "Properties": {
+    "Name": "North-South Firewall Routing",
+    "Owner": "NetworkAdmin",
+    "ProvisioningArtifactParameters": [
+     {
+      "DisableTemplateValidation": false,
+      "Info": {
+       "LoadTemplateFromURL": "https://sh-network-dev-bucket1.s3.amazonaws.com/northsouthfw_provider.yaml"
+      },
+      "Name": "v1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/NorthSouthFWProduct/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/22O3QrCMAyFn2X3W52K3stAb8fUa6lplWjXjP5MZOzdXbcpKoNAzjlJPrJgyxVLI/6wCYh7ovDMmr3jcI+76NQgL1mTk0J4xtlFj2pnyFfBf8TRSnOg3m6EQIek27jLagQJ3HFF18Ax7tIRaEBNmdyQ8OA21hIgD5i/MWrAiqufBUVebMmUvR0J4Wxy0LZxIS15AzLsfOuM9Pt1TUKym53V8zXrKo1uFjExXjssJSuG/gJGgoq9PAEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "ScnorthsouthfwStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
